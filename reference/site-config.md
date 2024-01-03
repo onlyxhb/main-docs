@@ -518,7 +518,7 @@ export default {
 }
 ```
 
-查看[类型声明和 jsdocs](https://github.com/vuejs/vitepress/blob/main/src/node/markdown/markdown.ts) 以获得所有可配置的选项。
+查看[类型声明和 jsdocs](https://github.com/onlyxhb/onlyxhb.github.io/blob/main/src/node/markdown/markdown.ts) 以获得所有可配置的选项。
 
 ### vite
 

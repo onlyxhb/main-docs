@@ -17,13 +17,13 @@ export const zh = defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
+      pattern: 'https://github.com/onlyxhb/onlyxhb.github.io/edit/main/docs/:path',
       text: '在 GitHub 上编辑此页面'
     },
 
     footer: {
       message: '根据 MIT 许可发布。',
-      copyright: '版权所有 © 2019 至今 尤雨溪'
+      copyright: `版权所有 © 2019-${new Date().getFullYear()} 徐州`
     },
 
     docFooter: {
@@ -69,11 +69,11 @@ function nav(): DefaultTheme.NavItem[] {
       items: [
         {
           text: '更新日志',
-          link: 'https://github.com/vuejs/vitepress/blob/main/CHANGELOG.md'
+          link: 'https://github.com/onlyxhb/onlyxhb.github.io/blob/main/CHANGELOG.md'
         },
         {
           text: '参与贡献',
-          link: 'https://github.com/vuejs/vitepress/blob/main/.github/contributing.md'
+          link: 'https://github.com/onlyxhb/onlyxhb.github.io/blob/main/.github/contributing.md'
         }
       ]
     }

@@ -38,7 +38,7 @@ export default DefaultTheme
 }
 ```
 
-查看[默认主题 CSS 变量](https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css)来获取可以被覆盖的变量。
+查看[默认主题 CSS 变量](https://github.com/onlyxhb/onlyxhb.github.io/blob/main/src/client/theme-default/styles/vars.css)来获取可以被覆盖的变量。
 
 ## 使用自定义字体 {#using-different-fonts}
 
@@ -334,4 +334,4 @@ export default defineConfig({
 })
 ```
 
-想要了解组件的确切名称请参考我们的[源代码](https://github.com/vuejs/vitepress/tree/main/src/client/theme-default/components)。因为组件是内部的，因此在小版本更迭中，它们名字改动的可能性很小。
+想要了解组件的确切名称请参考我们的[源代码](https://github.com/onlyxhb/onlyxhb.github.io/tree/main/src/client/theme-default/components)。因为组件是内部的，因此在小版本更迭中，它们名字改动的可能性很小。

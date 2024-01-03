@@ -261,7 +261,7 @@ export default defineConfig({
 })
 ```
 
-[这些选项](https://github.com/vuejs/vitepress/blob/main/types/docsearch.d.ts)可以被覆盖。请参阅 Algolia 官方文档以了解更多信息。
+[这些选项](https://github.com/onlyxhb/onlyxhb.github.io/blob/main/types/docsearch.d.ts)可以被覆盖。请参阅 Algolia 官方文档以了解更多信息。
 
 ### 爬虫配置 {#crawler-config}
 

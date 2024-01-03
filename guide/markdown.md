@@ -59,7 +59,7 @@ VitePress 带有内置的 Markdown 拓展。
 外部链接带有 `target="_blank" rel="noreferrer"`：
 
 - [vuejs.org](https://vuejs.org)
-- [VitePress on GitHub](https://github.com/vuejs/vitepress)
+- [VitePress on GitHub](https://github.com/onlyxhb/onlyxhb.github.io)
 
 ## frontmatter {#frontmatter}
 
