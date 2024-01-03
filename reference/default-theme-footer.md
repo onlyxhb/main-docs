@@ -1,6 +1,6 @@
-# Footer
+# 页脚 {#footer}
 
-VitePress will display global footer at the bottom of the page when `themeConfig.footer` is present.
+配置好 `themeConfig.footer`，VitePress 将在全局页面底部显示页脚。
 
 ```ts
 export default {
@@ -15,15 +15,15 @@ export default {
 
 ```ts
 export interface Footer {
-  // The message shown right before copyright.
+  // 版权前显示的信息
   message?: string
 
-  // The actual copyright text.
+  // 实际的版权文本
   copyright?: string
 }
 ```
 
-The above configuration also supports HTML strings. So, for example, if you want to configure footer text to have some links, you can adjust the configuration as follows:
+上面的配置也支持 HTML 字符串。所以，例如，如果想配置页脚文本有一些链接，可以调整配置如下：
 
 ```ts
 export default {
@@ -37,14 +37,14 @@ export default {
 ```
 
 ::: warning
-Only inline elements can be used in `message` and `copyright` as they are rendered inside a `<p>` element. If you want to add block elements, consider using [`layout-bottom`](../guide/extending-default-theme#layout-slots) slot instead.
+只有内联元素可以在 `message` 和 `copyright` 中使用，因为它们渲染在 `<p>` 元素中。如果想添加块元素，请考虑使用 [`layout-bottom`](../guide/extending-default-theme#layout-slots) 插槽。
 :::
 
-Note that footer will not be displayed when the [SideBar](./default-theme-sidebar) is visible.
+请注意，当[侧边栏](./default-theme-sidebar)可见时，不会显示页脚。
 
-## Frontmatter Config
+## frontmatter 配置 {#frontmatter-config}
 
-This can be disabled per-page using the `footer` option on frontmatter:
+可以使用 frontmatter 上的 `footer` 选项在单独页面上禁用此功能：
 
 ```yaml
 ---

@@ -2,11 +2,11 @@
 outline: deep
 ---
 
-# Frontmatter Config
+# frontmatter 配置 {#frontmatter-config}
 
-Frontmatter enables page based configuration. In every markdown file, you can use frontmatter config to override site-level or theme-level config options. Also, there are config options which you can only define in frontmatter.
+frontmatter 支持基于页面的配置。在每个 markdown 文件中，可以使用 frontmatter 配置来覆盖站点级别或主题级别的配置选项。此外，还有一些配置选项只能在 frontmatter 中定义。
 
-Example usage:
+示例用法：
 
 ```md
 ---
@@ -15,7 +15,7 @@ editLink: true
 ---
 ```
 
-You can access frontmatter data via the `$frontmatter` global in Vue expressions:
+可以通过 Vue 表达式中的 `$frontmatter` 全局变量访问 frontmatter 数据：
 
 ```md
 {{ $frontmatter.title }}
@@ -23,9 +23,9 @@ You can access frontmatter data via the `$frontmatter` global in Vue expressions
 
 ## title
 
-- Type: `string`
+- 类型：`string`
 
-Title for the page. It's same as [config.title](./site-config#title), and it overrides the site-level config.
+页面的标题。它与 [config.title](./site-config#title) 相同，并且覆盖站点级配置。
 
 ```yaml
 ---
@@ -35,9 +35,9 @@ title: VitePress
 
 ## titleTemplate
 
-- Type: `string | boolean`
+- 类型：`string | boolean`
 
-The suffix for the title. It's same as [config.titleTemplate](./site-config#titletemplate), and it overrides the site-level config.
+标题的后缀。它与 [config.titleTemplate](./site-config#titletemplate) 相同，它会覆盖站点级别的配置。
 
 ```yaml
 ---
@@ -48,9 +48,9 @@ titleTemplate: Vite & Vue powered static site generator
 
 ## description
 
-- Type: `string`
+- 类型：`string`
 
-Description for the page. It's same as [config.description](./site-config#description), and it overrides the site-level config.
+页面的描述。它与 [config.description](./site-config#description) 相同，它会覆盖站点级别的配置。
 
 ```yaml
 ---
@@ -60,9 +60,9 @@ description: VitePress
 
 ## head
 
-- Type: `HeadConfig[]`
+- 类型：`HeadConfig[]`
 
-Specify extra head tags to be injected for the current page. Will be appended after head tags injected by site-level config.
+指定要为当前页面注入的额外 head 标签。将附加在站点级配置注入的头部标签之后。
 
 ```yaml
 ---
@@ -82,20 +82,20 @@ type HeadConfig =
   | [string, Record<string, string>, string]
 ```
 
-## Default Theme Only
+## 仅默认主题 {#default-theme-only}
 
-The following frontmatter options are only applicable when using the default theme.
+以下 frontmatter 选项仅在使用默认主题时适用。
 
 ### layout
 
-- Type: `doc | home | page`
-- Default: `doc`
+- 类型：`doc | home | page`
+- 默认值：`doc`
 
-Determines the layout of the page.
+指定页面的布局。
 
-- `doc` - It applies default documentation styles to the markdown content.
-- `home` - Special layout for "Home Page". You may add extra options such as `hero` and `features` to rapidly create beautiful landing page.
-- `page` - Behave similar to `doc` but it applies no styles to the content. Useful when you want to create a fully custom page.
+- `doc`——它将默认文档样式应用于 markdown 内容。
+- `home`——“主页”的特殊布局。可以添加额外的选项，例如 `hero` 和 `features`，以快速创建漂亮的落地页。
+- `page`——表现类似于 `doc`，但它不对内容应用任何样式。当想创建一个完全自定义的页面时很有用。
 
 ```yaml
 ---
@@ -105,18 +105,18 @@ layout: doc
 
 ### hero <Badge type="info" text="home page only" />
 
-Defines contents of home hero section when `layout` is set to `home`. More details in [Default Theme: Home Page](./default-theme-home-page).
+当 `layout` 设置为 `home` 时，定义主页 hero 部分的内容。更多详细信息：[默认主题：主页](./default-theme-home-page)。
 
 ### features <Badge type="info" text="home page only" />
 
-Defines items to display in features section when `layout` is set to `home`. More details in [Default Theme: Home Page](./default-theme-home-page).
+定义当`layout` 设置为 `home` 时要在 features 部分中显示的项目。更多详细信息：[默认主题：主页](./default-theme-home-page)。
 
 ### navbar
 
-- Type: `boolean`
-- Default: `true`
+- 类型：`boolean`
+- 默认值：`true`
 
-Whether to display [navbar](./default-theme-nav).
+是否显示[导航栏](./default-theme-nav)。
 
 ```yaml
 ---
@@ -126,10 +126,10 @@ navbar: false
 
 ### sidebar
 
-- Type: `boolean`
-- Default: `true`
+- 类型：`boolean`
+- 默认值：`true`
 
-Whether to display [sidebar](./default-theme-sidebar).
+是否显示 [侧边栏](./default-theme-sidebar).
 
 ```yaml
 ---
@@ -139,14 +139,14 @@ sidebar: false
 
 ### aside
 
-- Type: `boolean | 'left'`
-- Default: `true`
+- 类型：`boolean | 'left'`
+- 默认值：`true`
 
-Defines the location of the aside component in the `doc` layout.
+定义侧边栏组件在 `doc` 布局中的位置。
 
-Setting this value to `false` prevents rendering of aside container.\
-Setting this value to `true` renders the aside to the right.\
-Setting this value to `'left'` renders the aside to the left.
+将此值设置为 `false` 可禁用侧边栏容器。\
+将此值设置为 `true` 会将侧边栏渲染到右侧。\
+将此值设置为 `left` 会将侧边栏渲染到左侧。
 
 ```yaml
 ---
@@ -156,17 +156,17 @@ aside: false
 
 ### outline
 
-- Type: `number | [number, number] | 'deep' | false`
-- Default: `2`
+- 类型：`number | [number, number] | 'deep' | false`
+- 默认值：`2`
 
-The levels of header in the outline to display for the page. It's same as [config.themeConfig.outline.level](./default-theme-config#outline), and it overrides the value set in site-level config.
+大纲中显示的标题级别。它与 [config.themeConfig.outline.level](./default-theme-config#outline) 相同，它会覆盖站点级的配置。
 
 ### lastUpdated
 
-- Type: `boolean | Date`
-- Default: `true`
+- 类型：`boolean | Date`
+- 默认值：`true`
 
-Whether to display [last updated](./default-theme-last-updated) text in the footer of the current page. If a datetime is specified, it will be displayed instead of the last git modified timestamp.
+是否在当前页面的页脚中显示[最近更新时间](./default-theme-last-updated)的文本。如果指定了日期时间，则会显示该日期时间而不是上次 git 修改的时间戳。
 
 ```yaml
 ---
@@ -176,10 +176,10 @@ lastUpdated: false
 
 ### editLink
 
-- Type: `boolean`
-- Default: `true`
+- 类型：`boolean`
+- 默认值：`true`
 
-Whether to display [edit link](./default-theme-edit-link) in the footer of the current page.
+是否在当前页的页脚显示[编辑链接](./default-theme-edit-link)。
 
 ```yaml
 ---
@@ -189,10 +189,10 @@ editLink: false
 
 ### footer
 
-- Type: `boolean`
-- Default: `true`
+- 类型：`boolean`
+- 默认值：`true`
 
-Whether to display [footer](./default-theme-footer).
+是否显示[页脚](./default-theme-footer)。
 
 ```yaml
 ---
@@ -202,9 +202,9 @@ footer: false
 
 ### pageClass
 
-- Type: `string`
+- 类型：`string`
 
-Add extra class name to a specific page.
+将额外的类名称添加到特定页面。
 
 ```yaml
 ---
@@ -212,10 +212,10 @@ pageClass: custom-page-class
 ---
 ```
 
-Then you can customize styles of this specific page in `.vitepress/theme/custom.css` file:
+然后可以在 `.vitepress/theme/custom.css` 文件中自定义该特定页面的样式：
 
 ```css
 .custom-page-class {
-  /* page-specific styles */
+  /* 特定页面的样式 */
 }
 ```

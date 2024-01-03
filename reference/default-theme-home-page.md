@@ -1,6 +1,6 @@
-# Home Page
+# 主页 {#home-page}
 
-VitePress default theme provides a homepage layout, which you can also see used on [the homepage of this site](../). You may use it on any of your pages by specifying `layout: home` in the [frontmatter](./frontmatter-config).
+VitePress 默认主题提供了一个首页布局，也可以在[此站点首页](../)看到。可以通过 [frontmatter](./frontmatter-config) 指定 `layout: home` 在任何页面上使用它
 
 ```yaml
 ---
@@ -8,11 +8,11 @@ layout: home
 ---
 ```
 
-However, this option alone wouldn't do much. You can add several different pre templated "sections" to the homepage by setting additional other options such as `hero` and `features`.
+但是，仅此选项不会有太大作用。可以通过设置其他选项（例如 `hero` 和 `features`）向主页添加几个不同的预模板化。
 
-## Hero Section
+## Hero 部分 {#hero-section}
 
-The Hero section comes at the top of the homepage. Here's how you can configure the Hero section.
+Hero section 位于主页顶部。以下是配置 Hero 的方法。
 
 ```yaml
 ---
@@ -37,21 +37,19 @@ hero:
 
 ```ts
 interface Hero {
-  // The string shown top of `text`. Comes with brand color
-  // and expected to be short, such as product name.
+  // `text` 上方的字符，带有品牌颜色，预计简短，例如产品名称
   name?: string
 
-  // The main text for the hero section. This will be defined
-  // as `h1` tag.
+  // hero 部分的主要文字，被定义为 `h1` 标签
   text: string
 
-  // Tagline displayed below `text`.
+  // `text` 下方的标语
   tagline?: string
 
-  // The image is displayed next to the text and tagline area.
+  // text 和 tagline 区域旁的图片
   image?: ThemeableImage
 
-  // Action buttons to display in home hero section.
+  // 主页 hero 部分的操作按钮
   actions?: HeroAction[]
 }
 
@@ -61,20 +59,20 @@ type ThemeableImage =
   | { light: string; dark: string; alt?: string }
 
 interface HeroAction {
-  // Color theme of the button. Defaults to `brand`.
+  // 按钮的颜色主题，默认为 `brand`
   theme?: 'brand' | 'alt'
 
-  // Label of the button.
+  // 按钮的标签
   text: string
 
-  // Destination link of the button.
+  // 按钮的目标链接
   link: string
 }
 ```
 
-### Customizing the name color
+### 自定义 name 的颜色 {#customizing-the-name-color}
 
-VitePress uses the brand color (`--vp-c-brand-1`) for the `name`. However, you may customize this color by overriding `--vp-home-hero-name-color` variable.
+VitePress 通过 (`--vp-c-brand-1`) 设置 `name` 的颜色 .但是，可以通过覆盖 `--vp-home-hero-name-color` 变量来自定义此颜色。
 
 ```css
 :root {
@@ -82,7 +80,7 @@ VitePress uses the brand color (`--vp-c-brand-1`) for the `name`. However, you m
 }
 ```
 
-Also you may customize it further by combining `--vp-home-hero-name-background` to give the `name` gradient color.
+也可以通过组合 `--vp-home-hero-name-background` 来进一步自定义 `name` 为渐变色。
 
 ```css
 :root {
@@ -91,11 +89,11 @@ Also you may customize it further by combining `--vp-home-hero-name-background` 
 }
 ```
 
-## Features Section
+## Features 部分 {#features-section}
 
-In Features section, you can list any number of features you would like to show right after the Hero section. To configure it, pass `features` option to the frontmatter.
+在 Features section，可以在 Hero section 之后列出任意数量的 Features。可以在 frontmatter 中配置  `features`。
 
-You can provide an icon for each feature, which can be an emoji or any type of image. When the configured icon is an image (svg, png, jpeg...), you must provide the icon with the proper width and height; you can also provide the description, its intrinsic size as well as its variants for dark and light theme when required.
+可以为每个 feature 提供一个图标，可以是表情符号或任何类型的图像。当配置的图标是图片（svg, png, jpeg...）时，必须提供合适的宽度和高度的图标；还可以在需要时配置其描述、固有大小以及深色和浅色主题下的不同表现。
 
 ```yaml
 ---
@@ -119,30 +117,28 @@ features:
 
 ```ts
 interface Feature {
-  // Show icon on each feature box.
+  // 在每个 feature 框中显示图标
   icon?: FeatureIcon
 
-  // Title of the feature.
+  // feature 的标题
   title: string
 
-  // Details of the feature.
+  // feature 的详情
   details: string
 
-  // Link when clicked on feature component. The link can
-  // be both internal or external.
+  // 点击 feature 组件时的链接，可以是内部链接，也可以是外部链接。
   //
-  // e.g. `guide/reference/default-theme-home-page` or `https://example.com`
+  // 例如 `guide/reference/default-theme-home-page` 或 `https://example.com`
   link?: string
 
-  // Link text to be shown inside feature component. Best
-  // used with `link` option.
+  // feature 组件内显示的链接文本，最好与 `link` 选项一起使用
   //
-  // e.g. `Learn more`, `Visit page`, etc.
+  // 例如 `Learn more`, `Visit page` 等
   linkText?: string
 
-  // Link rel attribute for the `link` option.
+  // `link` 选项的链接 rel 属性
   //
-  // e.g. `external`
+  // 例如 `external`
   rel?: string
 }
 

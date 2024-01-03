@@ -1,12 +1,12 @@
-# Last Updated
+# 最后更新于 {#last-updated}
 
-The update time of the last content will be displayed in the lower right corner of the page. To enable it, add `lastUpdated` options to your config.
+最近一条内容的更新时间会显示在页面右下角。要启用它，请将 `lastUpdated` 选项添加到配置中。
 
 ::: tip
-You need to commit the markdown file to see the updated time.
+你必须提交 markdown 文件才能看到最近更新时间。
 :::
 
-## Site-Level Config
+## 全局配置 {#site-level-config}
 
 ```js
 export default {
@@ -14,9 +14,9 @@ export default {
 }
 ```
 
-## Frontmatter Config
+## frontmatter 配置 {#frontmatter-config}
 
-This can be disabled per-page using the `lastUpdated` option on frontmatter:
+可以使用 frontmatter 上的 `lastUpdated` 选项单独禁用某个页面的最后更新展示：
 
 ```yaml
 ---
@@ -24,4 +24,4 @@ lastUpdated: false
 ---
 ```
 
-Also refer [Default Theme: Last Updated](./default-theme-config#lastupdated) for more details. Any truthy value at theme-level will also enable the feature unless explicitly disabled at site or page level.
+另请参阅[默认主题：最近更新时间](./default-theme-config#lastupdated) 了解更多详细信息。主题级别的任何 [truthy](https://developer.mozilla.org/zh-CN/docs/Glossary/Truthy) 值也将启用该功能，除非在站点或页面级别明确禁用。

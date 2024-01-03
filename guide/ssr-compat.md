@@ -2,15 +2,15 @@
 outline: deep
 ---
 
-# SSR Compatibility
+# SSR 兼容性 {#ssr-compatibility}
 
-VitePress pre-renders the app in Node.js during the production build, using Vue's Server-Side Rendering (SSR) capabilities. This means all custom code in theme components are subject to SSR Compatibility.
+通过使用 Vue 的服务器端渲染 (SSR) 功能，VitePress 能够在生产构建期间在 Node.js 中预渲染应用程序。这意味着主题组件中的所有自定义代码都需要考虑 SSR 兼容性。
 
-The [SSR section in official Vue docs](https://vuejs.org/guide/scaling-up/ssr.html) provides more context on what SSR is, the relationship between SSR / SSG, and common notes on writing SSR-friendly code. The rule of thumb is to only access browser / DOM APIs in `beforeMount` or `mounted` hooks of Vue components.
+[Vue 官方文档的 SSR 部分](https://cn.vuejs.org/guide/scaling-up/ssr.html)提供了更多有关 SSR 是什么，SSR / SSG 之间的关系以及编写 SSR 友好代码的常见注意事项等信息。原则上只在 Vue 组件的 `beforeMount` 或 `mounted` 钩子中访问 browser / DOM API。
 
-## `<ClientOnly>`
+## `<ClientOnly>` 
 
-If you are using or demoing components that are not SSR-friendly (for example, contain custom directives), you can wrap them inside the built-in `<ClientOnly>` component:
+如果正在使用或演示不支持 SSR 的组件 (例如，包含自定义指令)，则可以将它们包装在内置的 `<ClientOnly>` 组件中：
 
 ```md
 <ClientOnly>
@@ -18,11 +18,11 @@ If you are using or demoing components that are not SSR-friendly (for example, c
 </ClientOnly>
 ```
 
-## Libraries that Access Browser API on Import
+## 在导入时访问浏览器 API 的库 {#libraries-that-access-browser-api-on-import}
 
-Some components or libraries access browser APIs **on import**. To use code that assumes a browser environment on import, you need to dynamically import them.
+一些组件或库在**导入时**访问浏览器 API。要使用假定在导入时处于浏览器环境的代码，需要动态导入它们。
 
-### Importing in Mounted Hook
+### 在 mounted 钩子中导入 {#importing-in-mounted-hook}
 
 ```vue
 <script setup>
@@ -36,9 +36,9 @@ onMounted(() => {
 </script>
 ```
 
-### Conditional Import
+### 条件导入 {#conditional-import}
 
-You can also conditionally import a dependency using the `import.meta.env.SSR` flag (part of [Vite env variables](https://vitejs.dev/guide/env-and-mode.html#env-variables)):
+也可以使用 `import.meta.env.SSR` 标志 ([Vite 环境变量](https://cn.vitejs.dev/guide/env-and-mode.html#env-变量)的一部分)  来有条件地导入依赖项：
 
 ```js
 if (!import.meta.env.SSR) {
@@ -48,7 +48,7 @@ if (!import.meta.env.SSR) {
 }
 ```
 
-Since [`Theme.enhanceApp`](./custom-theme#theme-interface) can be async, you can conditionally import and register Vue plugins that access browser APIs on import:
+因为 [`Theme.enhanceApp`](/guide/custom-theme#theme-interface) 可以是异步的，所以可以有条件地导入并注册访问浏览器 API 的 Vue 插件：
 
 ```js
 // .vitepress/theme/index.js
@@ -64,7 +64,7 @@ export default {
 }
 ```
 
-If you're using TypeScript:
+如果使用 TypeScript:
 ```ts
 // .vitepress/theme/index.ts
 import type { Theme } from 'vitepress'
@@ -80,9 +80,9 @@ export default {
 } satisfies Theme
 ```
 
-### `defineClientComponent`
+### `defineClientComponent` 
 
-VitePress provides a convenience helper for importing Vue components that access browser APIs on import.
+VitePress 为导入 Vue 组件提供了一个方便的辅助函数，该组件可以在导入时访问浏览器 API。
 
 ```vue
 <script setup>
@@ -98,7 +98,7 @@ const ClientComp = defineClientComponent(() => {
 </template>
 ```
 
-You can also pass props/children/slots to the target component:
+还可以将 props/children/slots 传递给目标组件：
 
 ```vue
 <script setup>
@@ -109,7 +109,7 @@ const clientCompRef = ref(null)
 const ClientComp = defineClientComponent(
   () => import('component-that-access-window-on-import'),
 
-  // args are passed to h() - https://vuejs.org/api/render-function.html#h
+  // 参数传递给 h() - https://vuejs.org/api/render-function.html#h
   [
     {
       ref: clientCompRef
@@ -121,7 +121,7 @@ const ClientComp = defineClientComponent(
     }
   ],
 
-  // callback after the component is loaded, can be async
+  // 组件加载后的回调，可以是异步的
   () => {
     console.log(clientCompRef.value)
   }
@@ -133,4 +133,4 @@ const ClientComp = defineClientComponent(
 </template>
 ```
 
-The target component will only be imported in the mounted hook of the wrapper component.
+目标组件将仅在 wrapper 组件的 mounted 钩子中导入。

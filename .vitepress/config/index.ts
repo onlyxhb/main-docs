@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { en } from './en'
+// import { en } from './en'
 import { zh, search as zhSearch } from './zh'
 
 export default defineConfig({
@@ -47,20 +47,21 @@ export default defineConfig({
     ],
 
     search: {
-      provider: 'algolia',
+      provider: 'local',
+      // provider: 'algolia',
       options: {
-        appId: '8J64VVRP8K',
-        apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
-        indexName: 'vitepress',
+        // appId: '8J64VVRP8K',
+        // apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
+        // indexName: 'vitepress',
         locales: { ...zhSearch }
       }
     },
 
-    carbonAds: { code: 'CEBDT27Y', placement: 'vuejsorg' }
+    // carbonAds: { code: 'CEBDT27Y', placement: 'vuejsorg' }
   },
 
   locales: {
-    root: { label: 'English', ...en },
-    zh: { label: '简体中文', ...zh }
+    // en: { label: 'English', ...en },
+    root: { label: '简体中文', ...zh }
   }
 })

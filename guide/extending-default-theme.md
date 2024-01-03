@@ -2,25 +2,25 @@
 outline: deep
 ---
 
-# Extending the Default Theme
+# 扩展默认主题 {#extending-the-default-theme}
 
-VitePress' default theme is optimized for documentation, and can be customized. Consult the [Default Theme Config Overview](../reference/default-theme-config) for a comprehensive list of options.
+VitePress 默认的主题已经针对文档进行了优化，并且可以进行自定义。请参考[默认主题配置概览](../reference/default-theme-config)获取完整的选项列表。
 
-However, there are a number of cases where configuration alone won't be enough. For example:
+但是有一些情况仅靠配置是不够的。例如：
 
-1. You need to tweak the CSS styling;
-2. You need to modify the Vue app instance, for example to register global components;
-3. You need to inject custom content into the theme via layout slots.
+1. 需要调整 CSS 样式；
+2. 需要修改 Vue 应用实例，例如注册全局组件；
+3. 需要通过 layout 插槽将自定义内容注入到主题中；
 
-These advanced customizations will require using a custom theme that "extends" the default theme.
+这些高级自定义配置将需要使用自定义主题来“拓展”默认主题。
 
-::: tip
-Before proceeding, make sure to first read [Using a Custom Theme](./custom-theme) to understand how custom themes work.
+:::tip
+在继续之前，请确保首先阅读[自定义主题](./custom-theme)以了解其工作原理。
 :::
 
-## Customizing CSS
+## 自定义 CSS {#customizing-css}
 
-The default theme CSS is customizable by overriding root level CSS variables:
+可以通过覆盖根级别的 CSS 变量来自定义默认主题的 CSS：
 
 ```js
 // .vitepress/theme/index.js
@@ -38,13 +38,13 @@ export default DefaultTheme
 }
 ```
 
-See [default theme CSS variables](https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css) that can be overridden.
+查看[默认主题 CSS 变量](https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css)来获取可以被覆盖的变量。
 
-## Using Different Fonts
+## 使用自定义字体 {#using-different-fonts}
 
-VitePress uses [Inter](https://rsms.me/inter/) as the default font, and will include the fonts in the build output. The font is also auto preloaded in production. However, this may not be desirable if you want to use a different main font.
+VitePress 使用 [Inter](https://rsms.me/inter/) 作为默认字体，并且将其包含在生成的输出中。该字体在生产环境中也会自动预加载。但是如果要使用不同的字体，这可能不是很好。
 
-To avoid including Inter in the build output, import the theme from `vitepress/theme-without-fonts` instead:
+为了避免在生成后的输出中包含 Inter 字体，请从 `vitepress/theme-without-fonts` 中导入主题：
 
 ```js
 // .vitepress/theme/index.js
@@ -63,16 +63,16 @@ export default DefaultTheme
 ```
 
 ::: warning
-If you are using optional components like the [Team Page](../reference/default-theme-team-page) components, make sure to also import them from `vitepress/theme-without-fonts`!
+如果你在使用像是[团队页](/reference/default-theme-team-page)这样的组件，请确保也从 `vitepress/theme-without-fonts` 中导入它们！
 :::
 
-If your font is a local file referenced via `@font-face`, it will be processed as an asset and included under `.vitepress/dist/assets` with hashed filename. To preload this file, use the [transformHead](../reference/site-config#transformhead) build hook:
+如果字体是通过 `@font-face` 引用的本地文件，它将会被作为资源被包含在 `.vitepress/dist/asset` 目录下，并且使用哈希后的文件名。为了预加载这个文件，请使用 [transformHead](/reference/site-config#transformhead) 构建钩子：
 
 ```js
 // .vitepress/config.js
 export default {
   transformHead({ assets }) {
-    // adjust the regex accordingly to match your font
+    // 相应地调整正则表达式以匹配字体
     const myFontFile = assets.find(file => /font-name\.\w+\.woff2/)
     if (myFontFile) {
       return [
@@ -92,7 +92,7 @@ export default {
 }
 ```
 
-## Registering Global Components
+## 注册全局组件 {#registering-global-components}
 
 ```js
 // .vitepress/theme/index.js
@@ -102,13 +102,13 @@ import DefaultTheme from 'vitepress/theme'
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
-    // register your custom global components
+    // 注册自定义全局组件
     app.component('MyGlobalComponent' /* ... */)
   }
 }
 ```
 
-If you're using TypeScript:
+如果使用 TypeScript:
 ```ts
 // .vitepress/theme/index.ts
 import type { Theme } from 'vitepress'
@@ -117,17 +117,17 @@ import DefaultTheme from 'vitepress/theme'
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
-    // register your custom global components
+    // 注册自定义全局组件
     app.component('MyGlobalComponent' /* ... */)
   }
 } satisfies Theme
 ```
 
-Since we are using Vite, you can also leverage Vite's [glob import feature](https://vitejs.dev/guide/features.html#glob-import) to auto register a directory of components.
+因为我们使用 Vite，还可以利用 Vite 的 [glob 导入功能](https://cn.vitejs.dev/guide/features.html#glob-import)来自动注册一个组件目录。
 
-## Layout Slots
+## 布局插槽 {#layout-slots}
 
-The default theme's `<Layout/>` component has a few slots that can be used to inject content at certain locations of the page. Here's an example of injecting a component into the before outline:
+默认主题的 `<Layout/>` 组件有一些插槽，能够被用来在页面的特定位置注入内容。下面这个例子展示了将一个组件注入到 outline 之前：
 
 ```js
 // .vitepress/theme/index.js
@@ -136,8 +136,7 @@ import MyLayout from './MyLayout.vue'
 
 export default {
   extends: DefaultTheme,
-  // override the Layout with a wrapper component that
-  // injects the slots
+  // 使用注入插槽的包装组件覆盖 Layout
   Layout: MyLayout
 }
 ```
@@ -159,7 +158,7 @@ const { Layout } = DefaultTheme
 </template>
 ```
 
-Or you could use render function as well.
+也可以使用渲染函数。
 
 ```js
 // .vitepress/theme/index.js
@@ -177,9 +176,9 @@ export default {
 }
 ```
 
-Full list of slots available in the default theme layout:
+默认主题布局的全部可用插槽如下：
 
-- When `layout: 'doc'` (default) is enabled via frontmatter:
+- 当 `layout: 'doc'` (默认) 在 frontmatter 中被启用时：
   - `doc-top`
   - `doc-bottom`
   - `doc-footer-before`
@@ -193,19 +192,19 @@ Full list of slots available in the default theme layout:
   - `aside-outline-after`
   - `aside-ads-before`
   - `aside-ads-after`
-- When `layout: 'home'` is enabled via frontmatter:
+- 当 `layout: 'home'` 在 frontmatter 中被启用时:
   - `home-hero-before`
   - `home-hero-info`
   - `home-hero-image`
   - `home-hero-after`
   - `home-features-before`
   - `home-features-after`
-- When `layout: 'page'` is enabled via frontmatter:
+- 当 `layout: 'page'` 在 frontmatter 中被启用时:
   - `page-top`
   - `page-bottom`
-- On not found (404) page:
+- 当未找到页面 (404) 时:
   - `not-found`
-- Always:
+- 总是启用:
   - `layout-top`
   - `layout-bottom`
   - `nav-bar-title-before`
@@ -217,9 +216,9 @@ Full list of slots available in the default theme layout:
 
 ## Using View Transitions API
 
-### On Appearance Toggle
+### 关于外观切换 {#on-appearance-toggle}
 
-You can extend the default theme to provide a custom transition when the color mode is toggled. An example:
+可以扩展默认主题以在切换颜色模式时提供自定义过渡动画。例如：
 
 ```vue
 <!-- .vitepress/theme/Layout.vue -->
@@ -305,15 +304,15 @@ Result (**warning!**: flashing colors, sudden movements, bright lights):
 
 </details>
 
-Refer [Chrome Docs](https://developer.chrome.com/docs/web-platform/view-transitions/) from more details on view transitions.
+有关视图过渡动画的更多详细信息，请参阅 [Chrome 文档](https://developer.chrome.com/docs/web-platform/view-transitions/)。
 
-### On Route Change
+### 路由切换时 {#on-route-change}
 
-Coming soon.
+即将到来。
 
-## Overriding Internal Components
+## 重写内部组件 {#overriding-internal-components}
 
-You can use Vite's [aliases](https://vitejs.dev/config/shared-options.html#resolve-alias) to replace default theme components with your custom ones:
+可以使用 Vite 的 [aliases](https://vitejs.dev/config/shared-options.html#resolve-alias) 来用自定义组件替换默认主题的组件：
 
 ```ts
 import { fileURLToPath, URL } from 'node:url'
@@ -335,4 +334,4 @@ export default defineConfig({
 })
 ```
 
-To know the exact name of the component refer [our source code](https://github.com/vuejs/vitepress/tree/main/src/client/theme-default/components). Since the components are internal, there is a slight chance their name is updated between minor releases.
+想要了解组件的确切名称请参考我们的[源代码](https://github.com/vuejs/vitepress/tree/main/src/client/theme-default/components)。因为组件是内部的，因此在小版本更迭中，它们名字改动的可能性很小。

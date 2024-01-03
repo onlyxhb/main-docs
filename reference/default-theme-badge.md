@@ -1,10 +1,10 @@
-# Badge
+# 徽标 {#badge}
 
-The badge lets you add status to your headers. For example, it could be useful to specify the section's type, or supported version.
+徽标可让你为标题添加状态。例如，指定部分的类型或支持的版本可能很有用。
 
-## Usage
+## 用法 {#usage}
 
-You may use the `Badge` component which is globally available.
+可以使用全局组件 `Badge` 。
 
 ```html
 ### Title <Badge type="info" text="default" />
@@ -13,16 +13,16 @@ You may use the `Badge` component which is globally available.
 ### Title <Badge type="danger" text="caution" />
 ```
 
-Code above renders like:
+上面的代码渲染如下：
 
 ### Title <Badge type="info" text="default" />
 ### Title <Badge type="tip" text="^1.9.0" />
 ### Title <Badge type="warning" text="beta" />
 ### Title <Badge type="danger" text="caution" />
 
-## Custom Children
+## 自定义子节点 {#custom-children}
 
-`<Badge>` accept `children`, which will be displayed in the badge.
+`<Badge>` 接受 `children`，这将显示在徽标中。
 
 ```html
 ### Title <Badge type="info">custom element</Badge>
@@ -30,9 +30,9 @@ Code above renders like:
 
 ### Title <Badge type="info">custom element</Badge>
 
-## Customize Type Color
+## 自定义不同类型徽标的背景色 {#customize-type-color}
 
-You can customize the style of badges by overriding css variables. The following are the default values:
+可以通过覆盖 css 来自定义不同类型 `<Badge />` 的样式。以下是默认值。
 
 ```css
 :root {
@@ -56,14 +56,14 @@ You can customize the style of badges by overriding css variables. The following
 
 ## `<Badge>`
 
-`<Badge>` component accepts following props:
+`<Badge>` 组件接受以下属性：
 
 ```ts
 interface Props {
-  // When `<slot>` is passed, this value gets ignored.
+  // 当传递 `<slot>` 时，该值将被忽略
   text?: string
 
-  // Defaults to `tip`.
+  // 默认为 `tip`.
   type?: 'info' | 'tip' | 'warning' | 'danger'
 }
 ```

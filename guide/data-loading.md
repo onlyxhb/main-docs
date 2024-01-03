@@ -1,12 +1,12 @@
-# Build-Time Data Loading
+# 构建时数据加载 {#build-time-data-loading}
 
-VitePress provides a feature called **data loaders** that allows you to load arbitrary data and import it from pages or components. The data loading is executed **only at build time**: the resulting data will be serialized as JSON in the final JavaScript bundle.
+VitePress 提供了**数据加载**的功能，它允许加载任意数据并从页面或组件中导入它。数据加载**只在构建时**执行：最终的数据将被序列化为 JavaScript 包中的 JSON。
 
-Data loaders can be used to fetch remote data, or generate metadata based on local files. For example, you can use data loaders to parse all your local API pages and automatically generate an index of all API entries.
+数据加载可以被用于获取远程数据，也可以基于本地文件生成元数据。例如，可以使用数据加载来解析所有本地 API 页面并自动生成所有 API 入口的索引。
 
-## Basic Usage
+## 基本用法 {#basic-usage}
 
-A data loader file must end with either `.data.js` or `.data.ts`. The file should provide a default export of an object with the `load()` method:
+一个用于数据加载的文件必须以 `.data.js` 或 `.data.ts` 结尾。该文件应该提供一个默认导出的对象，该对象具有 `load()` 方法：
 
 ```js
 // example.data.js
@@ -19,9 +19,9 @@ export default {
 }
 ```
 
-The loader module is evaluated only in Node.js, so you can import Node APIs and npm dependencies as needed.
+数据加载模块只在 Node.js 中执行，因此可以按需导入 Node API 和 npm 依赖。
 
-You can then import data from this file in `.md` pages and `.vue` components using the `data` named export:
+然后，可以在 `.md` 页面和 `.vue` 组件中使用 `data` 命名导出从该文件中导入数据：
 
 ```vue
 <script setup>
@@ -31,7 +31,7 @@ import { data } from './example.data.js'
 <pre>{{ data }}</pre>
 ```
 
-Output:
+输出：
 
 ```json
 {
@@ -39,26 +39,26 @@ Output:
 }
 ```
 
-You'll notice the data loader itself does not export the `data`. It is VitePress calling the `load()` method behind the scenes and implicitly exposing the result via the `data` named export.
+你会注意到数据加载本身并没有导出 `data`。这是因为 VitePress 在后台调用了 `load()` 方法，并通过名为 `data` 的命名导出隐式地暴露了结果。
 
-This works even if the loader is async:
+即使它是异步的，这也是有效的：
 
 ```js
 export default {
   async load() {
-    // fetch remote data
+    // 获取远程数据
     return (await fetch('...')).json()
   }
 }
 ```
 
-## Data from Local Files
+## 使用本地文件生成数据 {#data-from-local-files}
 
-When you need to generate data based on local files, you should use the `watch` option in the data loader so that changes made to these files can trigger hot updates.
+当需要基于本地文件生成数据时，应该在数据加载中使用 `watch` 选项，以便这些文件改动时可以触发热更新。
 
-The `watch` option is also convenient in that you can use [glob patterns](https://github.com/mrmlnc/fast-glob#pattern-syntax) to match multiple files. The patterns can be relative to the loader file itself, and the `load()` function will receive the matched files as absolute paths.
+`watch` 选项也很方便，因为可以使用 [glob 模式](https://github.com/mrmlnc/fast-glob#pattern-syntax) 匹配多个文件。模式可以相对于数据加载文件本身，`load()` 函数将接收匹配文件的绝对路径。
 
-The following example shows loading CSV files and transforming them into JSON using [csv-parse](https://github.com/adaltas/node-csv/tree/master/packages/csv-parse/). Because this file only executes at build time, you will not be shipping the CSV parser to the client!
+下面的例子展示了如何使用 [csv-parse](https://github.com/adaltas/node-csv/tree/master/packages/csv-parse/) 加载 CSV 文件并将其转换为 JSON。因为此文件仅在构建时执行，因此不会将 CSV 解析器发送到客户端！
 
 ```js
 import fs from 'node:fs'
@@ -67,9 +67,8 @@ import { parse } from 'csv-parse/sync'
 export default {
   watch: ['./data/*.csv'],
   load(watchedFiles) {
-    // watchedFiles will be an array of absolute paths of the matched files.
-    // generate an array of blog post metadata that can be used to render
-    // a list in the theme layout
+    // watchFiles 是一个所匹配文件的绝对路径的数组。
+    // 生成一个博客文章元数据数组，可用于在主题布局中呈现列表。
     return watchedFiles.map((file) => {
       return parse(fs.readFileSync(file, 'utf-8'), {
         columns: true,
@@ -82,7 +81,7 @@ export default {
 
 ## `createContentLoader`
 
-When building a content focused site, we often need to create an "archive" or "index" page: a page where we list all available entries in our content collection, for example blog posts or API pages. We **can** implement this directly with the data loader API, but since this is such a common use case, VitePress also provides a `createContentLoader` helper to simplify this:
+当构建一个内容为主的站点时，我们经常需要创建一个“档案”或“索引”页面：一个我们可以列出内容中的所有可用条目的页面，例如博客文章或 API 页面。我们**可以**直接使用数据加载 API 实现这一点，但由于这是一个常见的用例，VitePress 还提供了一个 `createContentLoader` 辅助函数来简化这个过程：
 
 ```js
 // posts.data.js
@@ -91,29 +90,29 @@ import { createContentLoader } from 'vitepress'
 export default createContentLoader('posts/*.md', /* options */)
 ```
 
-The helper takes a glob pattern relative to the [source directory](./routing#source-directory), and returns a `{ watch, load }` data loader object that can be used as the default export in a data loader file. It also implements caching based on file modified timestamps to improve dev performance.
+该辅助函数接受一个相对于[项目根目录](./routing#project-root)的 glob 模式，并返回一个 `{ watch, load }` 数据加载对象，该对象可以用作数据加载文件中的默认导出。它还基于文件修改时间戳实现了缓存以提高开发性能。
 
-Note the loader only works with Markdown files - matched non-Markdown files will be skipped.
+请注意，数据加载仅适用于 Markdown 文件——匹配的非 Markdown 文件将被跳过。
 
-The loaded data will be an array with the type of `ContentData[]`:
+加载的数据将是一个类型为 `ContentData[]` 的数组：
 
 ```ts
 interface ContentData {
-  // mapped URL for the page. e.g. /posts/hello.html (does not include base)
-  // manually iterate or use custom `transform` to normalize the paths
+  // 页面的映射 URL，如 /posts/hello.html（不包括 base）
+  // 手动迭代或使用自定义 `transform` 来标准化路径
   url: string
-  // frontmatter data of the page
+  // 页面的 frontmatter 数据
   frontmatter: Record<string, any>
 
-  // the following are only present if relevant options are enabled
-  // we will discuss them below
+  // 只有启用了相关选项，才会出现以下内容
+  // 我们将在下面讨论它们
   src: string | undefined
   html: string | undefined
   excerpt: string | undefined
 }
 ```
 
-By default, only `url` and `frontmatter` are provided. This is because the loaded data will be inlined as JSON in the client bundle, so we need to be cautious about its size. Here's an example using the data to build a minimal blog index page:
+默认情况下只提供 `url` 和 `frontmatter`。这是因为加载的数据将作为 JSON 内联在客户端包中，我们需要谨慎考虑其大小。下面的例子展示了如何使用数据构建最小的博客索引页面：
 
 ```vue
 <script setup>
@@ -131,70 +130,70 @@ import { data as posts } from './posts.data.js'
 </template>
 ```
 
-### Options
+### 选项 {#options}
 
-The default data may not suit all needs - you can opt-in to transform the data using options:
+默认数据可能不适合所有需求——可以选择使用选项转换数据：
 
 ```js
 // posts.data.js
 import { createContentLoader } from 'vitepress'
 
 export default createContentLoader('posts/*.md', {
-  includeSrc: true, // include raw markdown source?
-  render: true,     // include rendered full page HTML?
-  excerpt: true,    // include excerpt?
+  includeSrc: true, // 包含原始 markdown 源?
+  render: true,     // 包含渲染的整页 HTML?
+  excerpt: true,    // 包含摘录?
   transform(rawData) {
-    // map, sort, or filter the raw data as you wish.
-    // the final result is what will be shipped to the client.
+    // 根据需要对原始数据进行 map、sort 或 filter
+    // 最终的结果是将发送给客户端的内容
     return rawData.sort((a, b) => {
       return +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)
     }).map((page) => {
-      page.src     // raw markdown source
-      page.html    // rendered full page HTML
-      page.excerpt // rendered excerpt HTML (content above first `---`)
+      page.src     // 原始 markdown 源
+      page.html    // 渲染的整页 HTML
+      page.excerpt // 渲染的摘录 HTML（第一个 `---` 上面的内容）
       return {/* ... */}
     })
   }
 })
 ```
 
-Check out how it is used in the [Vue.js blog](https://github.com/vuejs/blog/blob/main/.vitepress/theme/posts.data.ts).
+查看它在 [Vue.js 博客](https://github.com/vuejs/blog/blob/main/.vitepress/theme/posts.data.ts)中是如何使用的。
 
-The `createContentLoader` API can also be used inside [build hooks](../reference/site-config#build-hooks):
+`createContentLoader` API 也可以在[构建钩子](/reference/site-config#build-hooks)中使用：
 
 ```js
 // .vitepress/config.js
 export default {
   async buildEnd() {
     const posts = await createContentLoader('posts/*.md').load()
-    // generate files based on posts metadata, e.g. RSS feed
+    // 根据 posts 元数据生成文件，如 RSS 订阅源
   }
 }
 ```
 
-**Types**
+**类型**
 
 ```ts
 interface ContentOptions<T = ContentData[]> {
   /**
-   * Include src?
+   * 包含 src?
    * @default false
    */
   includeSrc?: boolean
 
   /**
-   * Render src to HTML and include in data?
+   * 将 src 渲染为 HTML 并包含在数据中?
    * @default false
    */
   render?: boolean
 
   /**
-   * If `boolean`, whether to parse and include excerpt? (rendered as HTML)
+   * 如果为 `boolean`，是否解析并包含摘录? (呈现为 HTML)
    *
-   * If `function`, control how the excerpt is extracted from the content.
+   * 如果为 `function`，则控制如何从内容中提取摘录
    *
-   * If `string`, define a custom separator to be used for extracting the
-   * excerpt. Default separator is `---` if `excerpt` is `true`.
+   * 如果为 `string`，则定义用于提取摘录的自定义分隔符
+   * 如果 `excerpt` 为 `true`，则默认分隔符为 `---`
    *
    * @see https://github.com/jonschlinkert/gray-matter#optionsexcerpt
    * @see https://github.com/jonschlinkert/gray-matter#optionsexcerpt_separator
@@ -207,29 +206,28 @@ interface ContentOptions<T = ContentData[]> {
     | string
 
   /**
-   * Transform the data. Note the data will be inlined as JSON in the client
-   * bundle if imported from components or markdown files.
+   * 转换数据。请注意，如果从组件或 Markdown 文件导入，数据将以 JSON 形式内联到客户端包中
    */
   transform?: (data: ContentData[]) => T | Promise<T>
 }
 ```
 
-## Typed Data Loaders
+## 为数据加载器导出类型 {#typed-data-loaders}
 
-When using TypeScript, you can type your loader and `data` export like so:
+当使用 TypeScript 时，可以像这样为 loader 和 `data` 导出类型：
 
 ```ts
 import { defineLoader } from 'vitepress'
 
 export interface Data {
-  // data type
+  // data 类型
 }
 
 declare const data: Data
 export { data }
 
 export default defineLoader({
-  // type checked loader options
+  // 类型检查加载器选项
   watch: ['...'],
   async load(): Promise<Data> {
     // ...
@@ -237,9 +235,9 @@ export default defineLoader({
 })
 ```
 
-## Configuration
+## 配置 {#configuration}
 
-To get the configuration information inside a loader, you can use some code like this:
+要获取数据加载中的配置信息，可以使用如下代码：
 
 ```ts
 import type { SiteConfig } from 'vitepress'

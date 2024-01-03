@@ -2,15 +2,15 @@
 outline: deep
 ---
 
-# Connecting to a CMS
+# 连接到 CMS {#connecting-to-a-cms}
 
-## General Workflow
+## 一般的工作流 {#general-workflow}
 
-Connecting VitePress to a CMS will largely revolve around [Dynamic Routes](./routing#dynamic-routes). Make sure to understand how it works before proceeding.
+将 VitePress 连接到 CMS 主要围绕[动态路由](./routing#dynamic-routes)展开。在继续阅读之前，请确保了解它的工作原理。
 
-Since each CMS will work differently, here we can only provide a generic workflow that you will need to adapt to your specific scenario.
+由于每个 CMS 的工作方式都不同，因此我们只能提供一个通用的工作流，你需要根据具体情况进行调整。
 
-1. If your CMS requires authentication, create an `.env` file to store your API tokens and load it so:
+1. 如果你的 CMS 需要身份验证，请创建一个 `.env` 文件来存储你的 API token：
 
     ```js
     // posts/[id].paths.js
@@ -19,21 +19,21 @@ Since each CMS will work differently, here we can only provide a generic workflo
     const env = loadEnv('', process.cwd())
     ```
 
-2. Fetch the necessary data from the CMS and format it into proper paths data:
+2. 从 CMS 获取必要的数据并将其格式调整为合适的路径数据：
 
-    ```js
+   ```js
     export default {
       async paths() {
-        // use respective CMS client library if needed
+        // 如有需要，使用相应的 CMS 客户端库
         const data = await (await fetch('https://my-cms-api', {
           headers: {
-            // token if necessary
+            // 如有必要，可使用 token
           }
         })).json()
 
         return data.map(entry => {
           return {
-            params: { id: entry.id, /* title, authors, date etc. */ },
+            params: { id: entry.id, /* title, authors, date 等 */ },
             content: entry.content
           }
         })
@@ -41,7 +41,7 @@ Since each CMS will work differently, here we can only provide a generic workflo
     }
     ```
 
-3. Render the content in the page:
+3. 在页面中渲染内容：
 
     ```md
     # {{ $params.title }}
@@ -51,6 +51,6 @@ Since each CMS will work differently, here we can only provide a generic workflo
     <!-- @content -->
     ```
 
-## Integration Guides
+## 整合指南 {#integration-guides}
 
-If you have written a guide on integrating VitePress with a specific CMS, please use the "Edit this page" link below to submit it here!
+如果你已经写了一篇关于如何将 VitePress 与特定 CMS 集成的指南，请点击下面的“在 GitHub 上编辑此页面”链接将它提交到这里！

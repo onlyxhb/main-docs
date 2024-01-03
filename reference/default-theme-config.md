@@ -1,6 +1,6 @@
-# Default Theme Config
+# 默认主题配置 {#default-theme-config}
 
-Theme config lets you customize your theme. You can define theme config via the `themeConfig` option in the config file:
+主题配置可让自定义主题。可以通过将 `themeConfig` 添加到配置文件来定义主题配置：
 
 ```ts
 export default {
@@ -8,7 +8,7 @@ export default {
   title: 'VitePress',
   description: 'Vite & Vue powered static site generator.',
 
-  // Theme related configurations.
+  // 主题相关配置
   themeConfig: {
     logo: '/logo.svg',
     nav: [...],
@@ -17,19 +17,19 @@ export default {
 }
 ```
 
-**The options documented on this page only apply to the default theme.** Different themes expect different theme config. When using a custom theme, the theme config object will be passed to the theme so the theme can define conditional behavior based on it.
+**此页面上记录的选项仅适用于默认主题**。不同的主题需要不同的主题配置。使用自定义主题时，主题配置对象将传递给主题，以便主题可以基于它作出不同表现。
 
 ## i18nRouting
 
-- Type: `boolean`
+- 类型：`boolean`
 
-Changing locale to say `zh` will change the URL from `/foo` (or `/en/foo/`) to `/zh/foo`. You can disable this behavior by setting `themeConfig.i18nRouting` to `false`.
+将本地语言更改为 `zh` 会将 URL 从 `/foo`（或 `/en/foo/`）更改为 `/foo`。可以通过将 `themeConfig.i18nRouting` 设置为 `false` 来禁用此行为。
 
 ## logo
 
-- Type: `ThemeableImage`
+- 类型：`ThemeableImage`
 
-Logo file to display in nav bar, right before the site title. Accepts a path string, or an object to set a different logo for light/dark mode.
+导航栏上显示的 Logo，位于站点标题右侧。可以接受一个路径字符串，或者一个对象来设置在浅色/深色模式下不同的 Logo。
 
 ```ts
 export default {
@@ -48,9 +48,9 @@ type ThemeableImage =
 
 ## siteTitle
 
-- Type: `string | false`
+- 类型：`string | false`
 
-You can customize this item to replace the default site title (`title` in app config) in nav. When set to `false`, title in nav will be disabled. Useful when you have `logo` that already contains the site title text.
+可以自定义此项以替换导航中的默认站点标题（应用配置中的 `title`）。当设置为 `false` 时，导航中的标题将被禁用。这在当 `logo` 已经包含站点标题文本时很有用。
 
 ```ts
 export default {
@@ -62,9 +62,9 @@ export default {
 
 ## nav
 
-- Type: `NavItem`
+- 类型：`NavItem`
 
-The configuration for the nav menu item. More details in [Default Theme: Nav](./default-theme-nav#navigation-links).
+导航菜单项的配置。可以在[默认主题: 导航栏](./default-theme-nav#navigation-links) 了解更多详情。
 
 ```ts
 export default {
@@ -109,9 +109,9 @@ interface NavItemWithChildren {
 
 ## sidebar
 
-- Type: `Sidebar`
+- 类型：`Sidebar`
 
-The configuration for the sidebar menu item. More details in [Default Theme: Sidebar](./default-theme-sidebar).
+侧边栏菜单项的配置。可以在[默认主题: 侧边栏](./default-theme-sidebar) 了解更多详情。
 
 ```ts
 export default {
@@ -139,26 +139,26 @@ export interface SidebarMulti {
 
 export type SidebarItem = {
   /**
-   * The text label of the item.
+   * 侧边栏项的文本标签
    */
   text?: string
 
   /**
-   * The link of the item.
+   * 侧边栏项的链接
    */
   link?: string
 
   /**
-   * The children of the item.
+   * 侧边栏项的子项
    */
   items?: SidebarItem[]
 
   /**
-   * If not specified, group is not collapsible.
+   * 如果未指定，侧边栏组不可折叠
    *
-   * If `true`, group is collapsible and collapsed by default
+   * 如果为 `true`，则侧边栏组可折叠并且默认折叠
    *
-   * If `false`, group is collapsible but expanded by default
+   * 如果为 `false`，则侧边栏组可折叠但默认展开
    */
   collapsed?: boolean
 }
@@ -166,37 +166,37 @@ export type SidebarItem = {
 
 ## aside
 
-- Type: `boolean | 'left'`
-- Default: `true`
-- Can be overridden per page via [frontmatter](./frontmatter-config#aside)
+- 类型：`boolean | 'left'`
+- 默认值：`true`
+- 每个页面可以通过 [frontmatter](./frontmatter-config#aside) 覆盖
 
-Setting this value to `false` prevents rendering of aside container.\
-Setting this value to `true` renders the aside to the right.\
-Setting this value to `left` renders the aside to the left.
+将此值设置为 `false` 可禁用 aside(大纲) 容器。\
+将此值设置为 `true` 将在页面右侧渲染。\
+将此值设置为 `left` 将在页面左侧渲染。
 
-If you want to disable it for all viewports, you should use `outline: false` instead.
+如果想对所有页面禁用它，应该使用 `outline: false`。
 
 ## outline
 
-- Type: `Outline | Outline['level'] | false`
-- Level can be overridden per page via [frontmatter](./frontmatter-config#outline)
+- 类型：`Outline | Outline['level'] | false`
+- 每个页面可以通过 [frontmatter](./frontmatter-config#outline) 覆盖层级
 
-Setting this value to `false` prevents rendering of outline container. Refer this interface for more details:
+将此值设置为 `false` 可禁止渲染大纲容器。更多详情请参考该接口：
 
 ```ts
 interface Outline {
   /**
-   * The levels of headings to be displayed in the outline.
-   * Single number means only headings of that level will be displayed.
-   * If a tuple is passed, the first number is the minimum level and the second number is the maximum level.
-   * `'deep'` is same as `[2, 6]`, which means all headings from `<h2>` to `<h6>` will be displayed.
+   * outline 中要显示的标题级别。
+   * 单个数字表示只显示该级别的标题。
+   * 如果传递的是一个元组，第一个数字是最小级别，第二个数字是最大级别。
+   * `'deep'` 与 `[2, 6]` 相同，将显示从 `<h2>` 到 `<h6>` 的所有标题。
    *
    * @default 2
    */
   level?: number | [number, number] | 'deep'
 
   /**
-   * The title to be displayed on the outline.
+   * 显示在 outline 上的标题。
    *
    * @default 'On this page'
    */
@@ -206,9 +206,9 @@ interface Outline {
 
 ## socialLinks
 
-- Type: `SocialLink[]`
+- 类型：`SocialLink[]`
 
-You may define this option to show your social account links with icons in nav.
+可以定义此选项以在导航栏中展示带有图标的社交帐户链接。
 
 ```ts
 export default {
@@ -216,13 +216,13 @@ export default {
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
       { icon: 'twitter', link: '...' },
-      // You can also add custom icons by passing SVG as string:
+      // 可以通过将 SVG 作为字符串传递来添加自定义图标：
       {
         icon: {
           svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Dribbble</title><path d="M12...6.38z"/></svg>'
         },
         link: '...',
-        // You can include a custom label for accessibility too (optional but recommended):
+        // 也可以为可访问性添加一个自定义标签（可选但推荐）:
         ariaLabel: 'cool link'
       }
     ]
@@ -252,10 +252,10 @@ type SocialLinkIcon =
 
 ## footer
 
-- Type: `Footer`
-- Can be overridden per page via [frontmatter](./frontmatter-config#footer)
+- 类型：`Footer`
+- 可以通过 [frontmatter](./frontmatter-config#footer) 进行覆盖。
 
-Footer configuration. You can add a message or copyright text on the footer, however, it will only be displayed when the page doesn't contain a sidebar. This is due to design concerns.
+页脚配置。可以添加 message 和 copyright。由于设计原因，仅当页面不包含侧边栏时才会显示页脚。
 
 ```ts
 export default {
@@ -277,10 +277,10 @@ export interface Footer {
 
 ## editLink
 
-- Type: `EditLink`
-- Can be overridden per page via [frontmatter](./frontmatter-config#editlink)
+- 类型：`EditLink`
+- 每个页面可以通过 [frontmatter](./frontmatter-config#editlink) 覆盖
 
-Edit Link lets you display a link to edit the page on Git management services such as GitHub, or GitLab. See [Default Theme: Edit Link](./default-theme-edit-link) for more details.
+编辑链接可让显示链接以编辑 Git 管理服务（例如 GitHub 或 GitLab）上的页面。有关详细信息，请参阅 [默认主题：编辑链接](./default-theme-edit-link)。
 
 ```ts
 export default {
@@ -302,9 +302,9 @@ export interface EditLink {
 
 ## lastUpdated
 
-- Type: `LastUpdatedOptions`
+- 类型：`LastUpdatedOptions`
 
-Allows customization for the last updated text and date format.
+允许自定义上次更新的文本和日期格式。
 
 ```ts
 export default {
@@ -337,9 +337,9 @@ export interface LastUpdatedOptions {
 
 ## algolia
 
-- Type: `AlgoliaSearch`
+- 类型：`AlgoliaSearch`
 
-An option to support searching your docs site using [Algolia DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch). Learn more in [Default Theme: Search](./default-theme-search)
+支持使用 [Algolia DocSearch](https://docsearch.algolia.com/docs/what-is-docsearch) 搜索站点文档。在 [默认主题：搜索](./default-theme-search) 中了解更多信息。
 
 ```ts
 export interface AlgoliaSearchOptions extends DocSearchProps {
@@ -347,13 +347,13 @@ export interface AlgoliaSearchOptions extends DocSearchProps {
 }
 ```
 
-View full options [here](https://github.com/vuejs/vitepress/blob/main/types/docsearch.d.ts).
+在[这里](https://github.com/vuejs/vitepress/blob/main/types/docsearch.d.ts)查看完整配置。
 
 ## carbonAds {#carbon-ads}
 
-- Type: `CarbonAdsOptions`
+- 类型：`CarbonAdsOptions`
 
-An option to display [Carbon Ads](https://www.carbonads.net/).
+一个配置即可展示 [Carbon Ads](https://www.carbonads.net/)。
 
 ```ts
 export default {
@@ -373,13 +373,13 @@ export interface CarbonAdsOptions {
 }
 ```
 
-Learn more in [Default Theme: Carbon Ads](./default-theme-carbon-ads)
+在 [Default Theme: Carbon Ads](./default-theme-carbon-ads) 中了解更多信息。
 
 ## docFooter
 
-- Type: `DocFooter`
+- 类型：`DocFooter`
 
-Can be used to customize text appearing above previous and next links. Helpful if not writing docs in English. Also can be used to disable prev/next links globally. If you want to selectively enable/disable prev/next links, you can use [frontmatter](./default-theme-prev-next-links).
+可用于自定义出现在上一页和下一页链接上方的文本。如果不是用英语编写文档，这很有帮助。也可用于全局禁用上一页/下一页链接。如果想有选择地启用/禁用上一个/下一个链接，可以使用 [frontmatter](./default-theme-prev-next-links)。
 
 ```ts
 export default {
@@ -401,49 +401,49 @@ export interface DocFooter {
 
 ## darkModeSwitchLabel
 
-- Type: `string`
-- Default: `Appearance`
+- 类型：`string`
+- 默认值：`Appearance`
 
-Can be used to customize the dark mode switch label. This label is only displayed in the mobile view.
+用于自定义暗模式开关标签，该标签仅在移动端视图中显示。
 
 ## lightModeSwitchTitle
 
-- Type: `string`
-- Default: `Switch to light theme`
+- 类型：`string`
+- 默认值：`Switch to light theme`
 
-Can be used to customize the light mode switch title that appears on hovering.
+用于自定义悬停时显示的亮模式开关标题。
 
 ## darkModeSwitchTitle
 
-- Type: `string`
-- Default: `Switch to dark theme`
+- 类型：`string`
+- 默认值：`Switch to dark theme`
 
-Can be used to customize the dark mode switch title that appears on hovering.
+用于自定义悬停时显示的暗模式开关标题。
 
 ## sidebarMenuLabel
 
-- Type: `string`
-- Default: `Menu`
+- 类型：`string`
+- 默认值：`Menu`
 
-Can be used to customize the sidebar menu label. This label is only displayed in the mobile view.
+用于自定义侧边栏菜单标签，该标签仅在移动端视图中显示。
 
 ## returnToTopLabel
 
-- Type: `string`
-- Default: `Return to top`
+- 类型：`string`
+- 默认值：`Return to top`
 
-Can be used to customize the label of the return to top button. This label is only displayed in the mobile view.
+用于自定义返回顶部按钮的标签，该标签仅在移动端视图中显示。
 
 ## langMenuLabel
 
-- Type: `string`
-- Default: `Change language`
+- 类型：`string`
+- 默认值：`Change language`
 
-Can be used to customize the aria-label of the language toggle button in navbar. This is only used if you're using [i18n](../guide/i18n).
+用于自定义导航栏中语言切换按钮的 aria-label，仅当使用 [i18n](../guide/i18n) 时才使用此选项。
 
 ## externalLinkIcon
 
-- Type: `boolean`
-- Default: `false`
+- 类型：`boolean`
+- 默认值：`false`
 
-Whether to show an external link icon next to external links in markdown.
+是否在 markdown 中的外部链接旁显示外部链接图标。

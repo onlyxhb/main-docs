@@ -2,21 +2,21 @@
 outline: deep
 ---
 
-# Site Config
+# 站点配置 {#site-config}
 
-Site config is where you can define the global settings of the site. App config options define settings that apply to every VitePress site, regardless of what theme it is using. For example, the base directory or the title of the site.
+站点配置可以定义站点的全局设置。应用配置选项适用于每个 VitePress 站点，无论它使用什么主题。例如根目录或站点的标题。
 
-## Overview
+## 概览 {#overview}
 
-### Config Resolution
+### 配置解析 {#config-resolution}
 
-The config file is always resolved from `<root>/.vitepress/config.[ext]`, where `<root>` is your VitePress [project root](../guide/routing#root-and-source-directory), and `[ext]` is one of the supported file extensions. TypeScript is supported out of the box. Supported extensions include `.js`, `.ts`, `.mjs`, and `.mts`.
+配置文件总是从 `<root>/.vitepress/config.[ext]` 解析，其中 `<root>` 是 VitePress [项目根目录](../guide/routing#root-and-source-directory)，`[ext]` 是支持的文件扩展名之一。开箱即用地支持 TypeScript。支持的扩展名包括 `.js`、`.ts`、`.mjs` 和 `.mts`。
 
-It is recommended to use ES modules syntax in config files. The config file should default export an object:
+建议在配置文件中使用 ES 模块语法。配置文件应该默认导出一个对象：
 
 ```ts
 export default {
-  // app level config options
+  // 应用级配置选项
   lang: 'en-US',
   title: 'VitePress',
   description: 'Vite & Vue powered static site generator.',
@@ -24,9 +24,9 @@ export default {
 }
 ```
 
-:::details Dynamic (Async) Config
+:::details 异步的动态配置
 
-If you need to dynamically generate the config, you can also default export a function. For example:
+如果需要动态生成配置，也可以默认导出一个函数，例如：
 
 ```ts
 import { defineConfig } from 'vitepress'
@@ -35,12 +35,12 @@ export default async () => defineConfig({
   const posts = await (await fetch('https://my-cms.com/blog-posts')).json()
 
   return {
-    // app level config options
+    // 应用级配置选项
     lang: 'en-US',
     title: 'VitePress',
     description: 'Vite & Vue powered static site generator.',
 
-    // theme level config options
+    // 主题级别配置选项
     themeConfig: {
       sidebar: [
         ...posts.map((post) => ({
@@ -53,7 +53,7 @@ export default async () => defineConfig({
 })
 ```
 
-You can also use top-level `await`. For example:
+也可以在最外层使用 `await`。例如：
 
 ```ts
 import { defineConfig } from 'vitepress'
@@ -61,12 +61,12 @@ import { defineConfig } from 'vitepress'
 const posts = await (await fetch('https://my-cms.com/blog-posts')).json()
 
 export default defineConfig({
-  // app level config options
+  // 应用级配置选项
   lang: 'en-US',
   title: 'VitePress',
   description: 'Vite & Vue powered static site generator.',
 
-  // theme level config options
+  // 主题级别配置选项
   themeConfig: {
     sidebar: [
       ...posts.map((post) => ({
@@ -80,9 +80,9 @@ export default defineConfig({
 
 :::
 
-### Config Intellisense
+### 配置智能提示 {#config-intellisense}
 
-Using the `defineConfig` helper will provide TypeScript-powered intellisense for config options. Assuming your IDE supports it, this should work in both JavaScript and TypeScript.
+使用 `defineConfig` 辅助函数将为配置选项提供 TypeScript 支持的智能提示。假设 IDE 支持它，那么智能提示在 JavaScript 和 TypeScript 中都将触发。
 
 ```js
 import { defineConfig } from 'vitepress'
@@ -92,21 +92,21 @@ export default defineConfig({
 })
 ```
 
-### Typed Theme Config
+### 主题类型提示 {#typed-theme-config}
 
-By default, `defineConfig` helper expects the theme config type from default theme:
+默认情况下，`defineConfig` 辅助函数期望默认主题的主题配置数据类型：
 
 ```ts
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   themeConfig: {
-    // Type is `DefaultTheme.Config`
+    // 类型为 `DefaultTheme.Config`
   }
 })
 ```
 
-If you use a custom theme and want type checks for the theme config, you'll need to use `defineConfigWithTheme` instead, and pass the config type for your custom theme via a generic argument:
+如果使用自定义主题并希望对主题配置进行类型检查，则需要改用 `defineConfigWithTheme`，并通过通用参数传递自定义主题的配置类型：
 
 ```ts
 import { defineConfigWithTheme } from 'vitepress'
@@ -114,36 +114,36 @@ import type { ThemeConfig } from 'your-theme'
 
 export default defineConfigWithTheme<ThemeConfig>({
   themeConfig: {
-    // Type is `ThemeConfig`
+    // 类型为 `ThemeConfig`
   }
 })
 ```
 
-### Vite, Vue & Markdown Config
+### Vite、Vue 和 Markdown 配置
 
 - **Vite**
 
-  You can configure the underlying Vite instance using the [vite](#vite) option in your VitePress config. No need to create a separate Vite config file.
+  可以使用 VitePress 配置中的 [vite](#vite) 选项配置底层 Vite 实例。无需创建单独的 Vite 配置文件。
 
 - **Vue**
 
-  VitePress already includes the official Vue plugin for Vite ([@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue)). You can configure its options using the [vue](#vue) option in your VitePress config.
+  VitePress 已经包含 Vite 的官方 Vue 插件（[@vitejs/plugin-vue](https://github.com/vitejs/vite-plugin-vue)）。可以配置 VitePress 中的 [vue](#vue) 选项。
 
 - **Markdown**
 
-  You can configure the underlying [Markdown-It](https://github.com/markdown-it/markdown-it) instance using the [markdown](#markdown) option in your VitePress config.
+  可以使用 VitePress 配置中的 [markdown](#markdown) 选项配置底层的 [Markdown-It](https://github.com/markdown-it/markdown-it) 实例。
 
-## Site Metadata
+## 站点元数据 {#site-metadata}
 
 ### title
 
-- Type: `string`
-- Default: `VitePress`
-- Can be overridden per page via [frontmatter](./frontmatter-config#title)
+- 类型：`string`
+- 默认值： `VitePress`
+- 每个页面可以通过 [frontmatter](./frontmatter-config#title) 覆盖
 
-Title for the site. When using the default theme, this will be displayed in the nav bar.
+站点的标题。使用默认主题时，这将显示在导航栏中。
 
-It will also be used as the default suffix for all individual page titles, unless [`titleTemplate`](#titletemplate) is defined. An individual page's final title will be the text content of its first `<h1>` header, combined with the global `title` as the suffix. For example with the following config and page content:
+它还将用作所有单独页面标题的默认后缀，除非定义了 [`titleTemplate`](#titletemplate)。单个页面的最终标题将是其第一个 `<h1>` 标题的文本内容加上的全局 `title`。例如使用以下配置和页面内容：
 
 ```ts
 export default {
@@ -155,14 +155,14 @@ export default {
 # Hello
 ```
 
-The title of the page will be `Hello | My Awesome Site`.
+页面标题就是 `Hello | My Awesome Site`.
 
 ### titleTemplate
 
-- Type: `string | boolean`
-- Can be overridden per page via [frontmatter](./frontmatter-config#titletemplate)
+- 类型：`string | boolean`
+- 每个页面可以通过 [frontmatter](./frontmatter-config#titletemplate) 覆盖
 
-Allows customizing each page's title suffix or the entire title. For example:
+允许自定义每个页面的标题后缀或整个标题。例如：
 
 ```ts
 export default {
@@ -175,9 +175,9 @@ export default {
 # Hello
 ```
 
-The title of the page will be `Hello | Custom Suffix`.
+页面标题就是 `Hello | Custom Suffix`.
 
-To completely customize how the title should be rendered, you can use the `:title` symbol in `titleTemplate`:
+要完全自定义标题的呈现方式，可以在 `titleTemplate` 中使用 `:title` 标识符：
 
 ```ts
 export default {
@@ -185,17 +185,17 @@ export default {
 }
 ```
 
-Here `:title` will be replaced with the text inferred from the page's first `<h1>` header. The title of the previous example page will be `Hello - Custom Suffix`.
+这里的 `:title` 将替换为从页面的第一个 `<h1>` 标题推断出的文本。上一个示例页面的标题将是 `Hello - Custom Suffix`。
 
-The option can be set to `false` to disable title suffixes.
+该选项可以设置为 `false` 以禁用标题后缀。
 
 ### description
 
-- Type: `string`
-- Default: `A VitePress site`
-- Can be overridden per page via [frontmatter](./frontmatter-config#description)
+- 类型：`string`
+- 默认值： `A VitePress site`
+- 每个页面可以通过 [frontmatter](./frontmatter-config#description) 覆盖
 
-Description for the site. This will render as a `<meta>` tag in the page HTML.
+站点的描述。这将呈现为页面 HTML 中的 `<meta>` 标签。
 
 ```ts
 export default {
@@ -205,11 +205,11 @@ export default {
 
 ### head
 
-- Type: `HeadConfig[]`
-- Default: `[]`
-- Can be appended per page via [frontmatter](./frontmatter-config#head)
+- 类型：`HeadConfig[]`
+- 默认值： `[]`
+- 每个页面可以通过 [frontmatter](./frontmatter-config#head) 添加
 
-Additional elements to render in the `<head>` tag in the page HTML. The user-added tags are rendered before the closing `head` tag, after VitePress tags.
+要在页面 HTML 的 `<head>` 标记中呈现的其他元素。用户添加的标签在结束 `head` 标签之前呈现，在 VitePress 标签之后。
 
 ```ts
 type HeadConfig =
@@ -217,19 +217,19 @@ type HeadConfig =
   | [string, Record<string, string>, string]
 ```
 
-#### Example: Adding a favicon
+#### 示例：添加一个图标 {#example-adding-a-favicon}
 
 ```ts
 export default {
   head: [['link', { rel: 'icon', href: '/favicon.ico' }]]
-} // put favicon.ico in public directory, if base is set, use /base/favicon.ico
+} // 将 favicon.ico 放在公共目录中，如果设置了 base，则使用 /base/favicon.ico
 
-/* Would render:
+/* 渲染成:
   <link rel="icon" href="/favicon.ico">
 */
 ```
 
-#### Example: Adding Google Fonts
+#### 示例：添加谷歌字体 {#example-adding-google-fonts}
 
 ```ts
 export default {
@@ -249,14 +249,14 @@ export default {
   ]
 }
 
-/* Would render:
+/* 渲染成:
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 */
 ```
 
-#### Example: Registering a service worker
+#### 示例：添加一个 serviceWorker {#example-registering-a-service-worker}
 
 ```ts
 export default {
@@ -273,7 +273,7 @@ export default {
   ]
 }
 
-/* Would render:
+/* 渲染成:
   <script id="register-sw">
     ;(() => {
       if ('serviceWorker' in navigator) {
@@ -284,7 +284,7 @@ export default {
 */
 ```
 
-#### Example: Using Google Analytics
+#### 示例：使用谷歌分析 {#example-using-google-analytics}
 
 ```ts
 export default {
@@ -304,7 +304,7 @@ export default {
   ]
 }
 
-/* Would render:
+/* 渲染成:
   <script async src="https://www.googletagmanager.com/gtag/js?id=TAG_ID"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -317,10 +317,10 @@ export default {
 
 ### lang
 
-- Type: `string`
-- Default: `en-US`
+- 类型：`string`
+- 默认值： `en-US`
 
-The lang attribute for the site. This will render as a `<html lang="en-US">` tag in the page HTML.
+站点的 lang 属性。这将呈现为页面 HTML 中的 `<html lang="en-US">` 标签。
 
 ```ts
 export default {
@@ -330,12 +330,12 @@ export default {
 
 ### base
 
-- Type: `string`
-- Default: `/`
+- 类型：`string`
+- 默认值： `/`
 
-The base URL the site will be deployed at. You will need to set this if you plan to deploy your site under a sub path, for example, GitHub pages. If you plan to deploy your site to `https://foo.github.io/bar/`, then you should set base to `'/bar/'`. It should always start and end with a slash.
+站点将部署到的 base URL。如果计划在子路径（例如 GitHub 页面）下部署站点，则需要设置此项。如果计划将站点部署到 `https://foo.github.io/bar/`，那么应该将 `base` 设置为 `“/bar/”`。它应该始终以 `/`开头和结尾。
 
-The base is automatically prepended to all the URLs that start with / in other options, so you only need to specify it once.
+base 会自动添加到其他选项中以 `/` 开头的所有 URL 前面，因此只需指定一次。
 
 ```ts
 export default {
@@ -343,24 +343,24 @@ export default {
 }
 ```
 
-## Routing
+## 路由 {#routing}
 
 ### cleanUrls
 
-- Type: `boolean`
-- Default: `false`
+- 类型：`boolean`
+- 默认值： `false`
 
-When set to `true`, VitePress will remove the trailing `.html` from URLs. Also see [Generating Clean URL](../guide/routing#generating-clean-url).
+当设置为 `true` 时，VitePress 将从 URL 中删除 `.html` 后缀。另请参阅[生成简洁的 URL](../guide/routing#generating-clean-url)。
 
-::: warning Server Support Required
-Enabling this may require additional configuration on your hosting platform. For it to work, your server must be able to serve `/foo.html` when visiting `/foo` **without a redirect**.
+::: warning 需要服务器支持
+要启用此功能，可能需要在托管平台上进行额外配置。要使其正常工作，服务器必须能够在**不重定向的情况下**访问 `/foo` 时提供 `/foo.html`。
 :::
 
 ### rewrites
 
-- Type: `Record<string, string>`
+- 类型：`Record<string, string>`
 
-Defines custom directory &lt;-&gt; URL mappings. See [Routing: Route Rewrites](../guide/routing#route-rewrites) for more details.
+自定义目录 &lt;-&gt; URL 映射。详细信息请参阅[路由：路由重写](../guide/routing#route-rewrites)。
 
 ```ts
 export default {
@@ -370,14 +370,14 @@ export default {
 }
 ```
 
-## Build
+## 构建 {#build}
 
 ### srcDir
 
-- Type: `string`
-- Default: `.`
+- 类型：`string`
+- 默认值： `.`
 
-The directory where your markdown pages are stored, relative to project root. Also see [Root and Source Directory](../guide/routing#root-and-source-directory).
+markdown 页面的目录，相对于项目根目录。另请参阅[根目录和源目录](../guide/routing#root-and-source-directory)。
 
 ```ts
 export default {
@@ -387,10 +387,10 @@ export default {
 
 ### srcExclude
 
-- Type: `string`
-- Default: `undefined`
+- 类型：`string`
+- 默认值： `undefined`
 
-A [glob pattern](https://github.com/mrmlnc/fast-glob#pattern-syntax) for matching markdown files that should be excluded as source content.
+用于匹配应作为源内容输出的 markdown 文件的 [全局模式](https://github.com/mrmlnc/fast-glob#pattern-syntax)。
 
 ```ts
 export default {
@@ -400,10 +400,10 @@ export default {
 
 ### outDir
 
-- Type: `string`
-- Default: `./.vitepress/dist`
+- 类型：`string`
+- 默认值： `./.vitepress/dist`
 
-The build output location for the site, relative to [project root](../guide/routing#root-and-source-directory).
+项目的构建输出位置，相对于[项目根目录](../guide/routing#root-and-source-directory)。
 
 ```ts
 export default {
@@ -413,10 +413,10 @@ export default {
 
 ### assetsDir
 
-- Type: `string`
-- Default: `assets`
+- 类型：`string`
+- 默认值： `assets`
 
-Specify the directory to nest generated assets under. The path should be inside [`outDir`](#outdir) and is resolved relative to it.
+指定放置生成的静态资源的目录。该路径应位于 [`outDir`](#outdir) 内，并相对于它进行解析。
 
 ```ts
 export default {
@@ -426,10 +426,10 @@ export default {
 
 ### cacheDir
 
-- Type: `string`
-- Default: `./.vitepress/cache`
+- 类型：`string`
+- 默认值： `./.vitepress/cache`
 
-The directory for cache files, relative to [project root](../guide/routing#root-and-source-directory). See also: [cacheDir](https://vitejs.dev/config/shared-options.html#cachedir).
+缓存文件的目录，相对于[项目根目录](../guide/routing#root-and-source-directory)。另请参阅：[cacheDir](https://vitejs.dev/config/shared-options.html#cachedir)。
 
 ```ts
 export default {
@@ -439,12 +439,12 @@ export default {
 
 ### ignoreDeadLinks
 
-- Type: `boolean | 'localhostLinks' | (string | RegExp | ((link: string) => boolean))[]`
-- Default: `false`
+- 类型：`boolean | 'localhostLinks' | (string | RegExp | ((link: string) => boolean))[]`
+- 默认值： `false`
 
-When set to `true`, VitePress will not fail builds due to dead links.
+当设置为 `true` 时，VitePress 不会因为死链而导致构建失败。
 
-When set to `'localhostLinks'`, the build will fail on dead links, but won't check `localhost` links.
+当设置为 `'localhostLinks'` ，出现死链时构建将失败，但不会检查 `localhost` 链接。
 
 ```ts
 export default {
@@ -452,18 +452,18 @@ export default {
 }
 ```
 
-It can also be an array of exact url string, regex patterns, or custom filter functions.
+它也可以是一组精确的 url 字符串、正则表达式模式或自定义过滤函数。
 
 ```ts
 export default {
   ignoreDeadLinks: [
-    // ignore exact url "/playground"
+    // 忽略精确网址 "/playground"
     '/playground',
-    // ignore all localhost links
+    // 忽略所有 localhost 链接
     /^https?:\/\/localhost/,
-    // ignore all links include "/repl/""
+    // 忽略所有包含 "/repl/" 的链接
     /\/repl\//,
-    // custom function, ignore all links include "ignore"
+    // 自定义函数，忽略所有包含 "ignore "的链接
     (url) => {
       return url.toLowerCase().includes('ignore')
     }
@@ -473,44 +473,44 @@ export default {
 
 ### mpa <Badge type="warning" text="experimental" />
 
-- Type: `boolean`
-- Default: `false`
+- 类型：`boolean`
+- 默认值： `false`
 
-When set to `true`, the production app will be built in [MPA Mode](../guide/mpa-mode). MPA mode ships 0kb JavaScript by default, at the cost of disabling client-side navigation and requires explicit opt-in for interactivity.
+设置为 `true` 时，生产应用程序将在 [MPA 模式](../guide/mpa-mode)下构建。MPA 模式默认提供 零 JavaScript 支持，代价是禁用客户端导航，并且需要明确选择加入才能进行交互。
 
-## Theming
+## 主题 {#theming}
 
-### appearance
+### appearance 
 
-- Type: `boolean | 'dark' | 'force-dark' | import('@vueuse/core').UseDarkOptions`
-- Default: `true`
+- 类型：`boolean | 'dark' | 'force-dark' | import('@vueuse/core').UseDarkOptions`
+- 默认值： `true`
 
-Whether to enable dark mode (by adding the `.dark` class to the `<html>` element).
+是否启用深色模式（通过将 `.dark` 类添加到 `<html>` 元素）。
 
-- If the option is set to `true`, the default theme will be determined by the user's preferred color scheme.
-- If the option is set to `dark`, the theme will be dark by default, unless the user manually toggles it.
-- If the option is set to `false`, users will not be able to toggle the theme.
+- 如果该选项设置为 `true`，则默认主题将由用户的首选配色方案决定。
+- 如果该选项设置为 `dark`，则默认情况下主题将是深色的，除非用户手动切换它。
+- 如果该选项设置为 `false`，用户将无法切换主题。
 
-This option injects an inline script that restores users settings from local storage using the `vitepress-theme-appearance` key. This ensures the `.dark` class is applied before the page is rendered to avoid flickering.
+此选项注入一个内联脚本，使用 `vitepress-theme-appearance` key 从本地存储恢复用户设置。这确保在呈现页面之前应用 `.dark` 类以避免闪烁。
 
-`appearance.initialValue` can only be `'dark' | undefined`. Refs or getters are not supported.
+`appearance.initialValue` 只能是 `'dark' | undefined`。 不支持 Refs 或 getters。
 
 ### lastUpdated
 
-- Type: `boolean`
-- Default: `false`
+- 类型：`boolean`
+- 默认值： `false`
 
-Whether to get the last updated timestamp for each page using Git. The timestamp will be included in each page's page data, accessible via [`useData`](./runtime-api#usedata).
+是否使用 Git 获取每个页面的最后更新时间戳。时间戳将包含在每个页面的页面数据中，可通过 [`useData`](./runtime-api#usedata) 访问。
 
-When using the default theme, enabling this option will display each page's last updated time. You can customize the text via [`themeConfig.lastUpdatedText`](./default-theme-config#lastupdatedtext) option.
+使用默认主题时，启用此选项将显示每个页面的最后更新时间。可以通过 [`themeConfig.lastUpdatedText`](./default-theme-config#lastupdatedtext) 选项自定义文本。
 
-## Customization
+## 自定义 {#customization}
 
 ### markdown
 
-- Type: `MarkdownOption`
+- 类型：`MarkdownOption`
 
-Configure Markdown parser options. VitePress uses [Markdown-it](https://github.com/markdown-it/markdown-it) as the parser, and [Shikiji](https://github.com/antfu/shikiji) (an improved version of [Shiki](https://shiki.matsu.io/)) to highlight language syntax. Inside this option, you may pass various Markdown related options to fit your needs.
+配置 Markdown 解析器选项。VitePress 使用 [Markdown-it](https://github.com/markdown-it/markdown-it) 作为解析器，使用[Shikiji](https://github.com/antfu/shikiji) ([Shiki](https://shiki.matsu.io/) 的改进版本) 来高亮不同语言语法。在此选项中，可以传递各种 Markdown 相关选项以满足的需要。
 
 ```js
 export default {
@@ -518,50 +518,50 @@ export default {
 }
 ```
 
-Check the [type declaration and jsdocs](https://github.com/vuejs/vitepress/blob/main/src/node/markdown/markdown.ts) for all the options available.
+查看[类型声明和 jsdocs](https://github.com/vuejs/vitepress/blob/main/src/node/markdown/markdown.ts) 以获得所有可配置的选项。
 
 ### vite
 
-- Type: `import('vite').UserConfig`
+- 类型：`import('vite').UserConfig`
 
-Pass raw [Vite Config](https://vitejs.dev/config/) to internal Vite dev server / bundler.
+将原始 [Vite 配置](https://vitejs.dev/config/)传递给内部 Vite 开发服务器 / bundler。
 
 ```js
 export default {
   vite: {
-    // Vite config options
+    // Vite 配置选项
   }
 }
 ```
 
 ### vue
 
-- Type: `import('@vitejs/plugin-vue').Options`
+- 类型：`import('@vitejs/plugin-vue').Options`
 
-Pass raw [`@vitejs/plugin-vue` options](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#options) to the internal plugin instance.
+将原始的 [@vitejs/plugin-vue 选项](https://github.com/vitejs/vite-plugin-vue/tree/main/packages/plugin-vue#options)传递给内部插件实例。
 
 ```js
 export default {
   vue: {
-    // @vitejs/plugin-vue options
+    // @vitejs/plugin-vue 选项
   }
 }
 ```
 
-## Build Hooks
+## 构建钩子 {#build-hooks}
 
-VitePress build hooks allow you to add new functionality and behaviors to your website:
+VitePress 构建钩子允许向站点添加新功能和行为：
 
-- Sitemap
-- Search Indexing
+- Sitemap 
+- Search Indexing 
 - PWA
-- Teleports
+- Teleport
 
 ### buildEnd
 
-- Type: `(siteConfig: SiteConfig) => Awaitable<void>`
+- 类型：`(siteConfig: SiteConfig) => Awaitable<void>`
 
-`buildEnd` is a build CLI hook, it will run after build (SSG) finish but before VitePress CLI process exits.
+`buildEnd` 是一个构建 CLI 钩子，它将在构建（SSG）完成后但在 VitePress CLI 进程退出之前运行。
 
 ```ts
 export default {
@@ -573,9 +573,9 @@ export default {
 
 ### postRender
 
-- Type: `(context: SSGContext) => Awaitable<SSGContext | void>`
+- 类型：`(context: SSGContext) => Awaitable<SSGContext | void>`
 
-`postRender` is a build hook, called when SSG rendering is done. It will allow you to handle the teleports content during SSG.
+ `postRender` 是一个构建钩子，在 SSG 渲染完成时调用。它将允许在 SSG 期间处理传递的内容。
 
 ```ts
 export default {
@@ -595,12 +595,12 @@ interface SSGContext {
 
 ### transformHead
 
-- Type: `(context: TransformContext) => Awaitable<HeadConfig[]>`
+- 类型：`(context: TransformContext) => Awaitable<HeadConfig[]>`
 
-`transformHead` is a build hook to transform the head before generating each page. It will allow you to add head entries that cannot be statically added to your VitePress config. You only need to return extra entries, they will be merged automatically with the existing ones.
+`transformHead` 是一个构建钩子，用于在生成每个页面之前转换 head。它将允许添加无法静态添加到 VitePress 配置中的 head entries。只需要返回额外的 entries，它们将自动与现有 entries 合并。
 
 ::: warning
-Don't mutate anything inside the `context`.
+不要改变 `context` 中的任何东西。
 :::
 
 ```ts
@@ -613,8 +613,8 @@ export default {
 
 ```ts
 interface TransformContext {
-  page: string // e.g. index.md (relative to srcDir)
-  assets: string[] // all non-js/css assets as fully resolved public URL
+  page: string // 例如 index.md (相对于 srcDir)
+  assets: string[] // 所有非 js/css 资源均作为完全解析的公共 URL
   siteConfig: SiteConfig
   siteData: SiteData
   pageData: PageData
@@ -625,7 +625,7 @@ interface TransformContext {
 }
 ```
 
-Note that this hook is only called when generating the site statically. It is not called during dev. If you need to add dynamic head entries during dev, you can use the [`transformPageData`](#transformpagedata) hook instead:
+请注意，仅在静态生成站点时才会调用此挂钩。在开发期间不会调用它。如果需要在开发期间添加动态头条目，可以使用 [`transformPageData`](#transformpagedata) 钩子来替代：
 
 ```ts
 export default {
@@ -647,12 +647,12 @@ export default {
 
 ### transformHtml
 
-- Type: `(code: string, id: string, context: TransformContext) => Awaitable<string | void>`
+- 类型：`(code: string, id: string, context: TransformContext) => Awaitable<string | void>`
 
-`transformHtml` is a build hook to transform the content of each page before saving to disk.
+`transformHtml` 是一个构建钩子，用于在保存到磁盘之前转换每个页面的内容。
 
-::: warning
-Don't mutate anything inside the `context`. Also, modifying the html content may cause hydration problems in runtime.
+::: warning 
+不要改变 `context` 中的任何东西。另外，修改 html 内容可能会导致运行时出现激活问题。
 :::
 
 ```ts
@@ -665,12 +665,12 @@ export default {
 
 ### transformPageData
 
-- Type: `(pageData: PageData, context: TransformPageContext) => Awaitable<Partial<PageData> | { [key: string]: any } | void>`
+- 类型：`(pageData: PageData, context: TransformPageContext) => Awaitable<Partial<PageData> | { [key: string]: any } | void>`
 
-`transformPageData` is a hook to transform the `pageData` of each page. You can directly mutate `pageData` or return changed values which will be merged into the page data.
+`transformPageData` 是一个钩子，用于转换每个页面的 `pageData`。可以直接改变 `pageData` 或返回将合并到 `PageData` 中的更改值。
 
 ::: warning
-Don't mutate anything inside the `context` and be careful that this might impact the performance of dev server, especially if you have some network requests or heavy computations (like generating images) in the hook. You can check for `process.env.NODE_ENV === 'production'` for conditional logic.
+不要改变 `context` 中的任何东西。请注意，这可能会影响开发服务器的性能，特别是当在钩子中有一些网络请求或大量计算（例如生成图像）时。可以通过判断 `process.env.NODE_ENV === 'production'` 匹配符合条件的情况。
 :::
 
 ```ts
@@ -679,7 +679,7 @@ export default {
     pageData.contributors = await getPageContributors(pageData.relativePath)
   }
 
-  // or return data to be merged
+  // 或返回要合并的数据
   async transformPageData(pageData, { siteConfig }) {
     return {
       contributors: await getPageContributors(pageData.relativePath)
