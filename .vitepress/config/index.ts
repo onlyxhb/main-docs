@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 import { zh, search as zhSearch } from './zh'
 
 export default defineConfig({
-  title: 'VitePress',
+  title: '随波逐流',
 
   lastUpdated: true,
   cleanUrls: true,

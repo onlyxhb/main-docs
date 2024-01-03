@@ -1,13 +1,13 @@
 ---
 layout: home
 
-title: VitePress
-titleTemplate: 由 Vite 和 Vue 驱动的静态站点生成器
+title: 随波逐流
+titleTemplate: 随波逐流
 
 hero:
-  name: VitePress
-  text: 由 Vite 和 Vue 驱动的静态站点生成器
-  tagline: 简单、强大、快速。就是你想要的现代 SSG 框架！
+  name: 徐州
+  text: 随波逐流
+  tagline: 随波逐流的痛苦你们不懂
   actions:
     - theme: brand
       text: 快速开始
@@ -17,7 +17,7 @@ hero:
       link: https://github.com/onlyxhb/onlyxhb.github.io
   image:
       src: /vitepress-logo-large.webp
-      alt: VitePress
+      alt: 随波逐流
 
 features:
   - icon: 📝
