@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "deploy": "npm run build && gh-pages -d .vitepress/dist"
   },
   "devDependencies": {
     "markdown-it-mathjax3": "^4.3.2",
-    "vitepress": "1.0.0-rc.34"
+    "vitepress": "1.0.0-rc.34",
+    "gh-pages": "^3.0.0"
   }
 }

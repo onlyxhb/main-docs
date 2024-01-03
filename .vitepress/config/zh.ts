@@ -54,17 +54,50 @@ export const zh = defineConfig({
 function nav(): DefaultTheme.NavItem[] {
   return [
     {
-      text: '指南',
+      text: '指引',
       link: '/guide/what-is-vitepress',
       activeMatch: '/guide/'
     },
     {
-      text: '参考',
+      text: '配置',
       link: '/reference/site-config',
       activeMatch: '/reference/'
     },
     {
-      text: '1.0.0',
+      text: '相关链接',
+      items: [
+        { text: 'Linux命令', link: '/linux-command' },
+        { text: 'JS知识图谱', link: '/javascript-guidebook' },
+        { text: 'TypeScript手册', link: '/typescript' },
+        { text: 'CSS Tricks', link: '/css_tricks' },
+        { text: 'Vue中文网', link: '/vue3-docs-cn' },
+        { text: '工作文档', link: '/custom-work-docs' },
+        { text: '文档导航', link: '/nav-docs-cn' },
+        { text: '编程导航', link: '/code-nav-doc' },
+        {
+          items: [
+            {
+              text: 'Vite',
+              link: 'https://cn.vitejs.dev',
+            },
+            {
+              text: 'Vue',
+              link: 'https://cn.vuejs.org',
+            },
+            {
+              text: 'Pinia',
+              link: 'https://pinia.vuejs.org/zh',
+            },
+            {
+              text: 'React',
+              link: 'https://zh-hans.react.dev',
+            }
+          ]
+        }
+      ]
+    },
+    {
+      text: 'Version',
       items: [
         {
           text: '更新日志',
